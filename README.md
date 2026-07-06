@@ -91,11 +91,6 @@ felzenszwalb-rcnn-from-scratch/
 │   └── train/
 │       ├── car/
 │       └── not_car/
-│
-├── data/
-│   └── coco/
-│       └── annotations/
-│
 ├── ncars_png/
 ├── README.md
 └── requirements.txt
