@@ -1,251 +1,384 @@
 <div id="top"></div>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
 
-
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
-
-
-<!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
-  <h3 align="center">Best-README-Template</h3>
+  <h1 align="center">Felzenszwalb R-CNN from Scratch</h1>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    A from-scratch R-CNN style object detection pipeline using Felzenszwalb graph-based segmentation for region proposals and a CNN binary classifier for car detection.
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+    <a href="https://github.com/krishachemburkar/felzenszwalb-rcnn-from-scratch"><strong>View Repository »</strong></a>
   </p>
 </div>
 
+---
 
-
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
-
-
-
-<!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+This project implements a simple R-CNN style object detection pipeline from scratch.
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+Instead of using a deep region proposal network, this project uses **Felzenszwalb graph-based segmentation** to generate region proposals. Each proposed region is converted into a bounding box, cropped from the original image, resized, and passed into a CNN classifier to decide whether the crop contains a car.
 
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
-
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
-Use the `BLANK_README.md` to get started.
+The goal of this project is to understand the classical object detection pipeline before moving to modern detectors like Faster R-CNN, YOLO, SSD, and DETR.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+---
 
+## Pipeline
 
-### Built With
-
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-* [Next.js](https://nextjs.org/)
-* [React.js](https://reactjs.org/)
-* [Vue.js](https://vuejs.org/)
-* [Angular](https://angular.io/)
-* [Svelte](https://svelte.dev/)
-* [Laravel](https://laravel.com)
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- GETTING STARTED -->
-## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+```text
+Input image
+    ↓
+Felzenszwalb graph-based segmentation
+    ↓
+Region proposals / bounding boxes
+    ↓
+Crop proposed regions
+    ↓
+Resize crops to 100 × 100
+    ↓
+CNN binary classifier
+    ↓
+Car / not-car prediction
+    ↓
+Final detected boxes
+```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+---
 
+## Features
 
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [x] Add Changelog
-- [x] Add back to top links
-- [] Add Additional Templates w/ Examples
-- [] Add "components" document to easily copy & paste sections of the readme
-- [] Multi-language Support
-    - [] Chinese
-    - [] Spanish
-
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
+- Felzenszwalb-style graph-based segmentation implemented from scratch
+- Region proposal generation using connected components
+- Bounding box extraction from segmented regions
+- Binary CNN classifier for car vs not-car classification
+- PyTorch training pipeline
+- Train/test split support
+- Loss and accuracy tracking
+- Mac MPS support for Apple Silicon acceleration
+- COCO negative image collection support
+- End-to-end R-CNN style detection flow
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+---
 
+## Built With
 
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+- Python
+- NumPy
+- OpenCV
+- Matplotlib
+- PyTorch
+- Torchvision
+- pycocotools
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+---
 
+## Project Structure
 
-<!-- LICENSE -->
+```text
+felzenszwalb-rcnn-from-scratch/
+│
+├── rcnn.ipynb
+├── dataset/
+│   └── train/
+│       ├── car/
+│       └── not_car/
+│
+├── data/
+│   └── coco/
+│       └── annotations/
+│
+├── ncars_png/
+├── README.md
+└── requirements.txt
+```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+## Core Ideas
+
+### 1. Region Proposal
+
+The image is treated as a graph:
+
+```text
+pixels = nodes
+neighboring pixels = edges
+edge weight = intensity difference between neighboring pixels
+```
+
+The algorithm starts with each pixel as its own component and gradually merges similar neighboring components.
+
+After segmentation, each final component is converted into a bounding box:
+
+```text
+x = min column
+y = min row
+w = max_x - min_x + 1
+h = max_y - min_y + 1
+```
+
+### 2. Classification
+
+Each proposed bounding box is cropped from the original image and resized to:
+
+```text
+100 × 100 × 3
+```
+
+The crop is then passed into a CNN classifier trained to distinguish:
+
+```text
+car     → 1
+not car → 0
+```
+
+### 3. Detection
+
+During inference:
+
+```text
+1. Generate region proposals
+2. Crop every proposal
+3. Preprocess each crop
+4. Pass crop through CNN
+5. Keep boxes with high car probability
+```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+## Installation
+
+Clone the repository:
+
+```sh
+git clone https://github.com/krishachemburkar/felzenszwalb-rcnn-from-scratch.git
+cd felzenszwalb-rcnn-from-scratch
+```
+
+Install dependencies:
+
+```sh
+pip install numpy opencv-python matplotlib torch torchvision pycocotools tqdm requests
+```
+
+Or create a `requirements.txt`:
+
+```txt
+numpy
+opencv-python
+matplotlib
+torch
+torchvision
+pycocotools
+tqdm
+requests
+```
+
+Then install:
+
+```sh
+pip install -r requirements.txt
+```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+## Dataset Setup
+
+The classifier expects a binary folder structure:
+
+```text
+dataset/
+    train/
+        car/
+        not_car/
+```
+
+Positive examples should go inside:
+
+```text
+dataset/train/car/
+```
+
+Negative examples should go inside:
+
+```text
+dataset/train/not_car/
+```
+
+Negative examples can be collected from COCO images that do not contain cars.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+## Training
+
+The model is trained as a binary classifier using image crops.
+
+Example:
+
+```python
+dataset = Dataset()
+
+train_loader = DataLoader(
+    train_dataset,
+    batch_size=32,
+    shuffle=True
+)
+
+test_loader = DataLoader(
+    test_dataset,
+    batch_size=32,
+    shuffle=False
+)
+```
+
+Training tracks:
+
+```text
+train loss
+test loss
+train accuracy
+test accuracy
+```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+## Mac / Apple Silicon Support
+
+If running on a Mac with Apple Silicon, PyTorch MPS can be used:
+
+```python
+device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+```
+
+Move the network and tensors to the selected device:
+
+```python
+network = network.to(device)
+train_img = train_img.float().to(device)
+train_label = train_label.float().to(device)
+```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+## Example Detection Flow
+
+```python
+img_color = cv2.imread("image.jpg")
+img_gray = cv2.cvtColor(img_color, cv2.COLOR_BGR2GRAY)
+
+bboxes = region_proposal(img_gray)
+
+detections = []
+
+for x, y, w, h in bboxes:
+    patch = img_color[y:y+h, x:x+w, :]
+
+    patch_tensor = preprocess_patch(patch).to(device)
+
+    prob = network(patch_tensor).view(-1).item()
+
+    if prob > 0.5:
+        detections.append((x, y, w, h, prob))
+```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+## Results
+
+The detector generates candidate boxes using Felzenszwalb segmentation and classifies each crop as car or not-car.
+
+Example output format:
+
+```text
+(x, y, width, height, probability)
+```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+## Limitations
+
+This is a learning-focused implementation, not a production-grade detector.
+
+Current limitations:
+
+- Region proposals are based on segmentation, so boxes may be noisy
+- A single segment may not cover the full object
+- Many small regions need filtering
+- No bounding box regression yet
+- No non-max suppression yet
+- Performance depends heavily on region proposal quality
+- CNN classifier is trained only for binary car detection
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+## Future Improvements
+
+- Add Non-Max Suppression
+- Add bounding box regression
+- Improve region merging after Felzenszwalb segmentation
+- Add IoU-based positive and negative proposal labeling
+- Train on VOC or COCO car annotations
+- Compare with Selective Search
+- Add evaluation metrics such as precision, recall, and mAP
+- Convert notebook code into modular Python files
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
+## Learning Motivation
+
+This project was built to understand how early object detection pipelines worked before modern end-to-end detectors.
+
+It focuses on the core R-CNN idea:
+
+```text
+region proposal + crop classifier = object detector
+```
+
+By implementing segmentation, bounding boxes, preprocessing, and classification manually, this project helps build intuition for how object detection systems work under the hood.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+---
+
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+This project is open source and available under the MIT License.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+---
 
-
-<!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+GitHub: [krishachemburkar](https://github.com/krishachemburkar)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
