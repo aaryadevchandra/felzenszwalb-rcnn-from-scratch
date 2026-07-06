@@ -91,11 +91,6 @@ felzenszwalb-rcnn-from-scratch/
 │   └── train/
 │       ├── car/
 │       └── not_car/
-│
-├── data/
-│   └── coco/
-│       └── annotations/
-│
 ├── ncars_png/
 ├── README.md
 └── requirements.txt
@@ -376,9 +371,3 @@ This project is open source and available under the MIT License.
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ---
-
-## Contact
-
-GitHub: [krishachemburkar](https://github.com/krishachemburkar)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
